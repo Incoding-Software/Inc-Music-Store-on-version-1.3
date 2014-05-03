@@ -29,7 +29,7 @@
                                                                   AlbumId = Model.Id, 
                                                                   Quantity = Selector.Jquery.Id(quantity)
                                                           }))
-              .OnBegin(dsl => dsl.Self().Core().Break.If(builder => builder.Not.Confirm("Are you sure add album {0} to cart ?".F(Model.Title))))
+              .OnBegin(dsl => dsl.Self().Core().Break.If(() => !Selector.JS.Confirm("Are you sure add album {0} to cart ?".F(Model.Title))))
               .OnSuccess(dsl => dsl.With(selector => selector.Id(IncMusicStoreSelector.DefaultDialogId)).JqueryUI().Dialog.Close())
               .AsHtmlAttributes()
               .ToButton("Add to cart"))           

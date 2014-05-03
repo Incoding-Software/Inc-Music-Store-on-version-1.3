@@ -41,7 +41,7 @@
                     @(Html.When(JqueryBind.Click)
                           .DoWithPreventDefault()
                           .AjaxPost(Url.Action("Delete", "Cart", new DeleteEntityByIdCommand(item.Id, typeof(CartItem))))
-                          .OnBegin(dsl => dsl.Self().Core().Break.If(builder => builder.Not.Confirm("Are you sure delete album {0} from cart".F(item.Album))))
+                          .OnBegin(dsl => dsl.Self().Core().Break.If(() => !Selector.JS.Confirm("Are you sure delete album {0} from cart".F(item.Album))))
                           .OnSuccess(dsl => dsl.With(r => r.Self().Closest(selector => selector.Tag(HtmlTag.Tr))).Core().JQuery.Manipulation.Remove())
                           .AsHtmlAttributes(new { href = "#" })
                           .ToLink("Remove from cart"))
