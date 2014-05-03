@@ -30,10 +30,6 @@
 
         Because of = () => { exception = Catch.Exception(() => mockCommand.Original.Execute()) as IncWebException; };
 
-        It should_be_exception = () => exception.Should(webException =>
-                                                            {
-                                                                webException.Message.ShouldEqual("Please use correct email and password");
-                                                                webException.Property.ShouldEqual("Server");
-                                                            });
+        It should_be_exception = () => exception.ShouldBeExceptionFor("Server", "Please use correct email and password");
     }
 }

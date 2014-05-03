@@ -6,7 +6,6 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using IncMusicStore.UI.App_Start;
-    using Incoding.MvcContrib;
 
     #endregion
 
@@ -21,15 +20,6 @@
 
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
-
-            ControllerBuilder.Current.SetControllerFactory(new IncControllerFactory());
-            IncMusicStoreBootstrapped.Start();
-        }
-
-        protected void Application_Error()
-        {
-            var lastEx = Server.GetLastError();
-            Server.ClearError();
         }
     }
 

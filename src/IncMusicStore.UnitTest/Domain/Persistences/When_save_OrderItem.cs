@@ -15,8 +15,8 @@
         Because of = () => persistenceSpecification
                                    .CheckProperty(r => r.UnitPrice, Pleasure.Generator.PositiveDecimal())
                                    .CheckProperty(r => r.Quantity, Pleasure.Generator.PositiveNumber())
-                                   .CheckReference(r => r.Album, Pleasure.Generator.InventEntity<Album>())
-                                   .CheckReference(r => r.Order, Pleasure.Generator.InventEntity<Order>());
+                                   .CheckProperty(r => r.Album, Pleasure.Generator.InventEntity<Album>())
+                                   .CheckProperty(r => r.Order, Pleasure.Generator.InventEntity<Order>());
 
         It should_be_verify = () => persistenceSpecification.VerifyMappingAndSchema();
     }

@@ -1,52 +1,34 @@
-﻿namespace IncMusicStore.UnitTest
+namespace IncMusicStore.UnitTest
 {
-    #region << Using >>
-
-    using System.Configuration;
-    using System.Globalization;
-    using System.Threading;
-    using FluentNHibernate.Cfg;
-    using FluentNHibernate.Cfg.Db;
     using IncMusicStore.Domain;
-    using Incoding.Block.Caching;
-    using Incoding.Block.IoC;
     using Incoding.MSpecContrib;
     using Machine.Specifications;
-    using Machine.Specifications.Annotations;
+    using System.Configuration;
+	using FluentNHibernate.Cfg;
+    using FluentNHibernate.Cfg.Db;
 
-    #endregion
-
-    ////ncrunch: no coverage start
-    [UsedImplicitly]
+	////ncrunch: no coverage start	
     public class MSpecAssemblyContext : IAssemblyContext
     {
         #region IAssemblyContext Members
 
         public void OnAssemblyStart()
         {
-            var enCulture = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = enCulture;
-            Thread.CurrentThread.CurrentUICulture = enCulture;
-
-            var configure = Fluently
+		            var configure = Fluently
                     .Configure()
                     .Database(MsSqlConfiguration.MsSql2008
-                                                .ConnectionString(ConfigurationManager.ConnectionStrings["IncMusicStoreTest"].ConnectionString)
+                                                .ConnectionString(ConfigurationManager.ConnectionStrings["Test"].ConnectionString)
                                                 .ShowSql())
-                    .Mappings(configuration => configuration.FluentMappings.AddFromAssemblyOf<Album>());
+                    .Mappings(configuration => configuration.FluentMappings.AddFromAssembly(typeof(Bootstrapper).Assembly));
 
-            NHibernatePleasure.StartSession(configure, true);
+           PleasureForData.StartNhibernate(configure, true);
         }
 
         public void OnAssemblyComplete()
-        {
-            NHibernatePleasure.StopAllSession();
-            CachingFactory.Instance.UnInitialize();
-            IoCFactory.Instance.UnInitialize();
+        {		  
         }
 
         #endregion
     }
-
-    ////ncrunch: no coverage end   
+    ////ncrunch: no coverage end
 }

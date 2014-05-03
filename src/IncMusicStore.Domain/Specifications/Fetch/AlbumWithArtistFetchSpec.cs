@@ -5,7 +5,7 @@
 
     public class AlbumWithArtistFetchSpec : FetchSpecification<Album>
     {
-        public override Action<AdHocFetchSpecification<Album>> FetchedBy()
+        public override Action<AdHocFetchSpecificationBase<Album>> FetchedBy()
         {
             return specification => specification.Join(r => r.Artist);
         }

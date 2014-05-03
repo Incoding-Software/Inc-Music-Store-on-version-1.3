@@ -35,7 +35,6 @@ if (!$.browser) {
     $.browser.version = parseFloat(navigator.userAgent);
 }
 
-
 (function($) {
     var locationWrapper = {
         put : function(hash, win) {

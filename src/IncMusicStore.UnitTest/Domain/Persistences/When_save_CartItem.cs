@@ -14,8 +14,8 @@
     {
         Because of = () => persistenceSpecification
                                    .CheckProperty(r => r.Quantity, Pleasure.Generator.PositiveNumber())
-                                   .CheckReference(r => r.Album, Pleasure.Generator.InventEntity<Album>())                                   
-                                   .CheckReference(r => r.Cart, Pleasure.Generator.InventEntity<Cart>());
+                                   .CheckProperty(r => r.Album, Pleasure.Generator.InventEntity<Album>())
+                                   .CheckProperty(r => r.Cart, Pleasure.Generator.InventEntity<Cart>());
 
         It should_be_verify = () => persistenceSpecification.VerifyMappingAndSchema();
     }

@@ -13,29 +13,22 @@
 
     public class AlbumController : IncControllerBase
     {
-        #region Constructors
-
-        public AlbumController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
-
         #region Http action
 
         [HttpGet]
         public ActionResult Details(GetAlbumQuery query)
         {
-            var vm = new AlbumDetailsVm(this.dispatcher.Query(query));
+            var vm = new AlbumDetailsVm(dispatcher.Query(query));
             return IncView(vm);
         }
 
         [HttpGet]
         public ActionResult FetchTopSelling()
         {
-            var vms = this.dispatcher
-                          .Query(new GetAlbumsTopSellingQuery())
-                          .Select(r => new AlbumTopSellingVm(r))
-                          .ToList();
+            var vms = dispatcher
+                    .Query(new GetAlbumsTopSellingQuery())
+                    .Select(r => new AlbumTopSellingVm(r))
+                    .ToList();
 
             return IncJson(vms);
         }

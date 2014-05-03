@@ -14,13 +14,6 @@
     [IncMusicStoreAuthorize]
     public class CartController : IncControllerBase
     {
-        #region Constructors
-
-        public CartController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
-
         #region Http action
 
         [HttpGet]

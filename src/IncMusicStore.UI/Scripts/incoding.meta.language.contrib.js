@@ -17,14 +17,27 @@ function ExecutableTooltip() {
 ExecutableTooltip.prototype.internalExecute = function () {
     var options = {};
     $.extend(options, this.jsonData.options);
-
     options.content = this.tryGetVal(this.jsonData.options.content);
-    options.show = $.parseJSON(options.show);
-    options.hide = $.parseJSON(options.hide);
 
-    $(this.target)
-        .attr('title', options.content)
+    var target = $(this.target);
+
+    target.attr('title', options.content)
         .tooltip(options);
+
+    target.on(options.eventOpen, function () {
+        target.tooltip("open");
+    });
+
+    if (!options.hideByBodyClick) {
+        target.on(options.eventClose, function () {
+            target.tooltip("close");
+        });
+    }
+    else {
+        $('body').on('click', function() {
+            target.tooltip("close");
+        });
+    }
 };
 
 //#endregion
@@ -267,7 +280,8 @@ MapFactory.create = function (target, options) {
 
 MapFactory.Instance = {
     gmap: new GoogleMapEngine(),
-    bing: new BingMapEngine()
+    bing: new BingMapEngine(),
+    yandex: new YandexMapEngine()
 };
 
 function GoogleMapEngine() {
@@ -352,6 +366,28 @@ function BingMapEngine() {
         this.map.entities.push(pin);
 
         return marker;
+    };
+}
+
+function YandexMapEngine() {
+    this.init = function (target, options) {
+        var myMap;
+
+        // Дождёмся загрузки API и готовности DOM.
+        ymaps.ready(init);
+
+        function init() {
+            // Создание экземпляра карты и его привязка к контейнеру с
+            // заданным id ("map").
+            myMap = new ymaps.Map('map', {
+                // При инициализации карты обязательно нужно указать
+                // её центр и коэффициент масштабирования.
+                center: [55.76, 37.64], // Москва
+                zoom: 10
+            });
+
+        }
+
     };
 }
 

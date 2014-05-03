@@ -12,12 +12,6 @@
 
     public class ArtistController : IncControllerBase
     {
-        #region Constructors
-
-        public ArtistController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
 
         #region Http action
 

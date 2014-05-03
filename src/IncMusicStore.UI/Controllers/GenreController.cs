@@ -13,12 +13,6 @@
 
     public class GenreController : IncControllerBase
     {
-        #region Constructors
-
-        public GenreController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
 
         #region Http action
 

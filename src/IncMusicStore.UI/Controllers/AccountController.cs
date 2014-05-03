@@ -4,20 +4,12 @@
 
     using System.Web.Mvc;
     using IncMusicStore.Domain;
-    using Incoding.CQRS;
     using Incoding.MvcContrib;
 
     #endregion
 
     public class AccountController : IncControllerBase
     {
-        #region Constructors
-
-        public AccountController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
-
         #region Http action
 
         [HttpGet]

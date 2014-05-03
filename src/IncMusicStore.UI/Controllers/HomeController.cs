@@ -3,19 +3,13 @@
     #region << Using >>
 
     using System.Web.Mvc;
-    using Incoding.CQRS;
     using Incoding.MvcContrib;
 
     #endregion
 
     public class HomeController : IncControllerBase
     {
-        #region Constructors
-
-        public HomeController(IDispatcher dispatcher)
-                : base(dispatcher) { }
-
-        #endregion
+        #region Http action
 
         [HttpGet]
         public ActionResult Index()
@@ -23,5 +17,6 @@
             return View();
         }
 
+        #endregion
     }
 }
