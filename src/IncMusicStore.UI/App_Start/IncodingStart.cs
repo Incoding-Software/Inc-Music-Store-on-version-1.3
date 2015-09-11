@@ -1,14 +1,26 @@
-using System;
+#region << Using >>
 
-[assembly: WebActivator.PreApplicationStartMethod(
-    typeof(IncMusicStore.UI.App_Start.IncodingStart), "PreStart")]
+using IncMusicStore.UI.App_Start;
+using WebActivator;
 
-namespace IncMusicStore.UI.App_Start {
+#endregion
+
+[assembly: PreApplicationStartMethod(
+        typeof(IncodingStart), "PreStart")]
+
+namespace IncMusicStore.UI.App_Start
+{
+    #region << Using >>
+
     using IncMusicStore.Domain;
     using IncMusicStore.UI.Controllers;
 
-    public static class IncodingStart {
-        public static void PreStart() {
+    #endregion
+
+    public static class IncodingStart
+    {
+        public static void PreStart()
+        {
             Bootstrapper.Start();
             new DispatcherController(); // init routes
         }

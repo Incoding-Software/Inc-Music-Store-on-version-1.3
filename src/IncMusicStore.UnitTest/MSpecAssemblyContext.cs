@@ -1,13 +1,14 @@
 namespace IncMusicStore.UnitTest
 {
-    using IncMusicStore.Domain;
+
     using Incoding.MSpecContrib;
     using Machine.Specifications;
     using System.Configuration;
 	using FluentNHibernate.Cfg;
     using FluentNHibernate.Cfg.Db;
+    using IncMusicStore.Domain;
 
-	////ncrunch: no coverage start	
+    ////ncrunch: no coverage start	
     public class MSpecAssemblyContext : IAssemblyContext
     {
         #region IAssemblyContext Members
