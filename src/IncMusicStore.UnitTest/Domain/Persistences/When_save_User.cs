@@ -14,7 +14,7 @@
         Because of = () => persistenceSpecification
                                    .CheckProperty(r => r.Email, Pleasure.Generator.String())
                                    .CheckProperty(r => r.Password, Pleasure.Generator.String())
-                                   .CheckProperty(r => r.Cart, Pleasure.Generator.InventEntity<Cart>())
+                                   .CheckProperty(r => r.Basket, Pleasure.Generator.InventEntity<Basket>())
                                    .CheckProperty(r => r.Orders, Pleasure.ToEnumerable(Pleasure.Generator.InventEntity<Order>()), (user, order) => user.AddOrder(order))
                                    .CheckProperty(r => r.Name, Pleasure.Generator.Invent<FullName>());
 

@@ -12,33 +12,33 @@
 
     #endregion
 
-    [Subject(typeof(ApproveCartCommand))]
+    [Subject(typeof(ApproveBasketCommand))]
     public class When_approve_cart
     {
         #region Estabilish value
 
-        static MockMessage<ApproveCartCommand, object> mockCommand;
+        static MockMessage<ApproveBasketCommand, object> mockCommand;
 
         static Mock<User> user;
 
-        static ReadOnlyCollection<CartItem> cartItems;
+        static ReadOnlyCollection<Item> cartItems;
 
         #endregion
 
         Establish establish = () =>
                                   {
-                                      var command = Pleasure.Generator.Invent<ApproveCartCommand>();
+                                      var command = Pleasure.Generator.Invent<ApproveBasketCommand>();
 
                                       user = Pleasure.Mock<User>(mockUser =>
                                                                      {
-                                                                         cartItems = Pleasure.ToReadOnly(Pleasure.Generator.Invent<CartItem>(dsl => dsl.GenerateTo<Album>(r => r.Album)));
-                                                                         var cart = Pleasure.MockAsObject<Cart>(mockCart => mockCart.SetupGet(r => r.Items).Returns(cartItems));
-                                                                         mockUser.SetupGet(r => r.Cart).Returns(cart);
+                                                                         cartItems = Pleasure.ToReadOnly(Pleasure.Generator.Invent<Item>(dsl => dsl.GenerateTo<Album>(r => r.Album)));
+                                                                         var cart = Pleasure.MockAsObject<Basket>(mockCart => mockCart.SetupGet(r => r.Items).Returns(cartItems));
+                                                                         mockUser.SetupGet(r => r.Basket).Returns(cart);
                                                                      });
 
-                                      mockCommand = MockCommand<ApproveCartCommand>
-                                              .When(command)
-                                              .StubGetById(IncMusicStorePleasure.TheUserId(), user.Object);
+                                      mockCommand = MockCommand<ApproveBasketCommand>
+                                              .When(command);
+
                                   };
 
         Because of = () => mockCommand.Original.Execute();
@@ -47,7 +47,7 @@
                                      {
                                          Action<Order> predicateOrderItem = order => order.Items.ShouldEqualWeakEach(cartItems, (dsl, i) => dsl.ForwardToValue(r => r.UnitPrice, cartItems[i].Album.Price)
                                                                                                                                                .ForwardToAction(r => r.Order, item => item.Order.ShouldNotBeNull()));
-                                         Action<ICompareFactoryDsl<Order, ApproveCartCommand>> predicateOrder = dsl => dsl.IgnoreBecauseRoot(r => r.User)
+                                         Action<ICompareFactoryDsl<Order, ApproveBasketCommand>> predicateOrder = dsl => dsl.IgnoreBecauseRoot(r => r.User)
                                                                                                                           .ForwardToAction(r => r.Items, predicateOrderItem)
                                                                                                                           .ForwardToAction(r => r.PaymentInfo, order => order.PaymentInfo.ShouldEqualWeak(mockCommand.Original))
                                                                                                                           .ForwardToAction(r => r.CreateDt, order => order.CreateDt.ShouldBeGreaterThan(DateTime.Now.AddSeconds(-10)));

@@ -10,14 +10,14 @@
 
     #endregion
 
-    public class CartItem : IncEntityBase
+    public class Item : IncEntityBase
     {
         #region Constructors
 
         [UsedImplicitly, Obsolete(ObsoleteMessage.SerializeConstructor, true), ExcludeFromCodeCoverage]
-        public CartItem() { }
+        public Item() { }
 
-        public CartItem(Album album, int quantity)
+        public Item(Album album, int quantity)
         {
             Album = album;
             Quantity = quantity;
@@ -31,14 +31,14 @@
 
         public virtual int Quantity { get; protected set; }
 
-        public virtual Cart Cart { get; protected internal set; }
+        public virtual Basket Basket { get; protected internal set; }
 
         #endregion
 
         #region Nested classes
 
         [UsedImplicitly, Obsolete(ObsoleteMessage.ClassNotForDirectUsage, true), ExcludeFromCodeCoverage]
-        public class Map : IncMusicStoreMap<CartItem>
+        public class Map : IncMusicStoreMap<Item>
         {
             ////ncrunch: no coverage start
             #region Constructors
@@ -46,7 +46,7 @@
             public Map()
             {
                 Map(r => r.Quantity);
-                References(r => r.Cart).Cascade.SaveUpdate();
+                References(r => r.Basket).Cascade.SaveUpdate();
                 References(r => r.Album).Cascade.SaveUpdate();
             }
 

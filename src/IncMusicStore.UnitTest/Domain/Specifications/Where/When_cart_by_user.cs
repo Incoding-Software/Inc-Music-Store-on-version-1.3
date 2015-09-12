@@ -16,15 +16,15 @@
     {
         #region Estabilish value
 
-        static IQueryable<Cart> fakeCollection;
+        static IQueryable<Basket> fakeCollection;
 
-        static List<Cart> filterCollection;
+        static List<Basket> filterCollection;
 
         #endregion
 
         Establish establish = () =>
                                   {
-                                      Func<string, Cart> createEntity = (userId) => Pleasure.MockStrictAsObject<Cart>(mock => mock.SetupGet(r => r.User.Id).Returns(userId));
+                                      Func<string, Basket> createEntity = (userId) => Pleasure.MockStrictAsObject<Basket>(mock => mock.SetupGet(r => r.User.Id).Returns(userId));
 
                                       fakeCollection = Pleasure.ToQueryable(createEntity(Pleasure.Generator.String()), createEntity(Pleasure.Generator.TheSameString()));
                                   };

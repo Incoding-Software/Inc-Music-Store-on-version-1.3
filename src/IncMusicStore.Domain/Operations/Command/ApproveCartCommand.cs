@@ -11,21 +11,27 @@
 
     #endregion
 
-    public class ApproveCartCommand : CommandBase
+    public class ApproveBasketCommand : CommandBase
     {
-        #region Constructors
-
-        [UsedImplicitly, Obsolete(ObsoleteMessage.SerializeConstructor, true), ExcludeFromCodeCoverage]
-        public ApproveCartCommand() { }
-
-        public ApproveCartCommand(Cart cart)
+        public class GetById : QueryBase<ApproveBasketCommand>
         {
-            CartId = cart.Id.ToString();
-            Items = cart.Items.Select(r => new ApproveCartItemSubCommand(r))
-                        .ToArray();
+            protected override ApproveBasketCommand ExecuteResult()
+            {
+                var userId = Dispatcher.Query(new GetCookiesAsStringQuery()
+                                              {
+                                                      Key = GetCurrentUserQuery.Key
+                                              });
+                var car = Repository.Query(whereSpecification: new CartByUserWhereSpec(userId))
+                                    .First();
+                return new ApproveBasketCommand()
+                       {
+                               CartId = car.Id,
+                               Items = car.Items.Select(r => new ApproveCartItemSubCommand(r))
+                                          .ToArray()
+                       };
+            }
         }
 
-        #endregion
 
         #region Properties
 
@@ -55,7 +61,7 @@
         {
             #region Constructors
 
-            public ApproveCartItemSubCommand(CartItem item)
+            public ApproveCartItemSubCommand(Item item)
             {
                 Album = item.Album.Title;
                 Quantity = item.Quantity.ToString();
@@ -76,7 +82,7 @@
 
         public override void Execute()
         {
-            var user = Repository.GetById<User>(IncMusicStoreApplication.UserId);
+            var user = Dispatcher.Query(new GetCurrentUserQuery());
 
             var order = new Order(PromoCode, new PaymentInfo
                                                  {
@@ -87,7 +93,7 @@
                                                          PostalCode = PostalCode, 
                                                          State = State, 
                                                  });
-            foreach (var orderItem in user.Cart.Items.Select(r => new OrderItem(r)))
+            foreach (var orderItem in user.Basket.Items.Select(r => new OrderItem(r)))
                 order.AddItem(orderItem);
             user.AddOrder(order);
 

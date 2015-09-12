@@ -29,7 +29,7 @@
 
         It should_be_save = () =>
                             mockCommand.ShouldBeSave<User>(user => user.ShouldEqualWeak(mockCommand.Original, dsl => dsl.IgnoreBecauseNotUse(r => r.Orders)
-                                                                                                                        .ForwardToAction(r => r.Cart, s => s.Cart.ShouldNotBeNull())
+                                                                                                                        .ForwardToAction(r => r.Basket, s => s.Basket.ShouldNotBeNull())
                                                                                                                         .ForwardToAction(r => r.Name, s => s.Name.ShouldEqualWeak(mockCommand.Original))));
     }
 }

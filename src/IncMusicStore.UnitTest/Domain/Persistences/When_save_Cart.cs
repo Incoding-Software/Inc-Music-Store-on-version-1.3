@@ -9,12 +9,12 @@
 
     #endregion
 
-    [Subject(typeof(Cart))]
-    public class When_save_Cart : SpecWithPersistenceSpecification<Cart>
+    [Subject(typeof(Basket))]
+    public class When_save_Cart : SpecWithPersistenceSpecification<Basket>
     {
         Because of = () => persistenceSpecification
                                    .CheckProperty(r => r.User, Pleasure.Generator.InventEntity<User>())
-                                   .CheckProperty(r => r.Items, Pleasure.ToEnumerable(Pleasure.Generator.InventEntity<CartItem>()), (cart, item) => cart.AddItem(item));
+                                   .CheckProperty(r => r.Items, Pleasure.ToEnumerable(Pleasure.Generator.InventEntity<Item>()), (cart, item) => cart.AddItem(item));
 
         It should_be_verify = () => persistenceSpecification.VerifyMappingAndSchema();
     }

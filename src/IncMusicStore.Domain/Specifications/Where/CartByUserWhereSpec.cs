@@ -4,7 +4,7 @@
     using System.Linq.Expressions;
     using Incoding;
 
-    public class CartByUserWhereSpec : Specification<Cart>
+    public class CartByUserWhereSpec : Specification<Basket>
     {
         #region Fields
 
@@ -21,7 +21,7 @@
 
         #endregion
 
-        public override Expression<Func<Cart, bool>> IsSatisfiedBy()
+        public override Expression<Func<Basket, bool>> IsSatisfiedBy()
         {
             return r => r.User.Id == this.userId;
         }

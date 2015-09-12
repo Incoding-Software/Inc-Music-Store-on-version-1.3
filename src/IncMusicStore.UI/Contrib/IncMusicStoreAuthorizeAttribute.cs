@@ -17,23 +17,12 @@
     {
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
-            var formAuthentication = IoCFactory.Instance.TryResolve<IFormAuthentication>();
-            if (!formAuthentication.IsAuthentication())
-            {
-                formAuthentication.SignOut();
-                HandleUnauthorizedRequest(filterContext);
-                return;
-            }
-
             var dispatcher = IoCFactory.Instance.TryResolve<IDispatcher>();
-            var sessionContext = IoCFactory.Instance.TryResolve<ISessionContext>();
+            if (dispatcher.Query(new IsAuthorizationUserQuery()))
+                return;
 
-            var currentUser = dispatcher.Query(new GetEntityByIdQuery<User>(sessionContext.UserId));
-            if (currentUser == null)
-            {
-                formAuthentication.SignOut();
-                HandleUnauthorizedRequest(filterContext);
-            }
+            dispatcher.Push(new SignOutUserCommand());
+            HandleUnauthorizedRequest(filterContext);
         }
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)

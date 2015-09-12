@@ -76,28 +76,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Infrastructure\Bootstrapper.cs" />
-    <Compile Include="Infrastructure\IncMusicStoreApplication.cs" />
-    <Compile Include="Infrastructure\IncMusicStoreExtensions.cs" />
-    <Compile Include="Infrastructure\Impl\HttpSessionContext.cs" />
-    <Compile Include="Infrastructure\Core\ISessionContext.cs" />
-    <Compile Include="Infrastructure\Impl\DefaultFormAuthentication.cs" />
-    <Compile Include="Infrastructure\Core\IFormAuthentication.cs" />
     <Compile Include="Operations\Command\AddAlbumCommand.cs" />
     <Compile Include="Operations\Command\AddArtistCommand.cs" />
     <Compile Include="Operations\Command\AddCartItemCommand.cs" />
     <Compile Include="Operations\Command\AddGenreCommand.cs" />
     <Compile Include="Operations\Command\ApproveCartCommand.cs" />
+    <Compile Include="Operations\Command\SignOutUserCommand.cs" />
+    <Compile Include="Operations\Query\FormatToMoneyQuery.cs" />
+    <Compile Include="Operations\Query\GetCurrentUserQuery.cs" />
+    <Compile Include="Operations\Command\SignInFormCommand.cs" />
     <Compile Include="Operations\Command\SignInUserCommand.cs" />
     <Compile Include="Operations\Command\SignUpUserCommand.cs" />
     <Compile Include="Operations\Query\GetAlbumQuery.cs" />
     <Compile Include="Operations\Query\GetAlbumsTopSellingQuery.cs" />
-    <Compile Include="Operations\Query\GetCurrentCartQuery.cs" />
+    <Compile Include="Operations\Query\GetGenresQuery.cs" />
+    <Compile Include="Operations\Query\GetIndexOfBasketQuery.cs" />
+    <Compile Include="Operations\Query\IsAuthorizationUserQuery.cs" />
     <Compile Include="Operations\Query\SearchAlbumQuery.cs" />
     <Compile Include="Persistence\Album.cs" />
     <Compile Include="Persistence\Artist.cs" />
     <Compile Include="Persistence\Cart.cs" />
     <Compile Include="Persistence\CartItem.cs" />
     <Compile Include="Persistence\Component\FullName.cs" />
+    <Compile Include="Persistence\EntityBase.cs" />
     <Compile Include="Persistence\Genre.cs" />
     <Compile Include="Persistence\IncMusicStoreMap.cs" />
     <Compile Include="Persistence\Order.cs" />
@@ -106,19 +107,12 @@
     <Compile Include="Persistence\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setups\FillDataBaseSetUp.cs" />
-    <Compile Include="Setups\DataBaseSetUp.cs" />
-    <Compile Include="Specifications\Fetch\AlbumWithArtistFetchSpec.cs" />
-    <Compile Include="Specifications\Fetch\AlbumWithGenreFetchSpec.cs" />
-    <Compile Include="Specifications\Fetch\AlbumWithOrderItemFetchSpec.cs" />
-    <Compile Include="Specifications\Fetch\CartWithItemFetchSpec.cs" />
     <Compile Include="Specifications\Order\AlbumByOrderItemCountOrderSpec.cs" />
     <Compile Include="Specifications\Where\AblumInArtistsOptWhereSpec.cs" />
     <Compile Include="Specifications\Where\AlbumContainsTitleOptWhereSpec.cs" />
     <Compile Include="Specifications\Where\AlbumInGenresOptWhereSpec.cs" />
     <Compile Include="Specifications\Where\CartByUserWhereSpec.cs" />
     <Compile Include="Specifications\Where\UserByCredentialWhereSpec.cs" />
-    <Compile Include="Subsribers\Events\SingInUserEvent.cs" />
-    <Compile Include="Subsribers\Impl\UserSubscriber.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

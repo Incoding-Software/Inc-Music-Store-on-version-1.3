@@ -89,9 +89,7 @@
   <ItemGroup>
     <Compile Include="Domain\Behaviors\When_user_new_cart.cs" />
     <Compile Include="Domain\Operations\Command\When_approve_cart.cs" />
-    <Compile Include="Domain\Operations\Query\When_get_current_cart.cs" />
     <Compile Include="Domain\Specifications\Where\When_cart_by_user.cs" />
-    <Compile Include="IncMusicStorePleasure.cs" />
     <Compile Include="Domain\Operations\Command\When_add_cart_item.cs" />
     <Compile Include="Domain\Operations\Command\When_sign_in_user_with_wrong_credential.cs" />
     <Compile Include="Domain\Operations\Command\When_sign_in_user.cs" />
@@ -114,26 +112,8 @@
     <Compile Include="Domain\Specifications\Where\When_album_in_artists.cs" />
     <Compile Include="Domain\Specifications\Where\When_album_contains_title.cs" />
     <Compile Include="Domain\Specifications\Where\When_album_in_genres.cs" />
-    <Compile Include="Domain\Subscriber\When_user_subscriber_sing_in_user.cs" />
     <Compile Include="MSpecAssemblyContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UI\Account\When_account_controller_get_sign_in.cs" />
-    <Compile Include="UI\Account\When_account_controller_post_sign_in.cs" />
-    <Compile Include="UI\Account\When_account_controller_get_sign_up.cs" />
-    <Compile Include="UI\Account\When_account_controller_post_sign_up.cs" />
-    <Compile Include="UI\Album\When_album_controller_fetch_top_selling.cs" />
-    <Compile Include="UI\Album\When_album_controller_details.cs" />
-    <Compile Include="UI\Artist\When_artist_controller_fetch_for_dd.cs" />
-    <Compile Include="UI\Cart\When_cart_controller_delete.cs" />
-    <Compile Include="UI\Cart\When_cart_controller_index.cs" />
-    <Compile Include="UI\Cart\When_cart_controller_get_approve.cs" />
-    <Compile Include="UI\Cart\When_cart_controller_post_approve.cs" />
-    <Compile Include="UI\Cart\When_cart_controller_add_item.cs" />
-    <Compile Include="UI\Genre\When_genre_controller_fetch.cs" />
-    <Compile Include="UI\Genre\When_genre_controller_fetch_for_dd.cs" />
-    <Compile Include="UI\Home\When_home_controller_index.cs" />
-    <Compile Include="UI\Search\When_search_controller_fetch.cs" />
-    <Compile Include="UI\Search\When_search_controller_index.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -12,7 +12,7 @@
 
     #endregion
 
-    public class Album : IncEntityBase
+    public class Album : EntityBase
     {
         #region Fields
 

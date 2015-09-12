@@ -20,7 +20,7 @@
 
         static Album album;
 
-        static Mock<Cart> cart;
+        static Mock<Basket> cart;
 
         #endregion
 
@@ -28,13 +28,12 @@
                                   {
                                       var command = Pleasure.Generator.Invent<AddCartItemCommand>();
 
-                                      cart = Pleasure.Mock<Cart>();
-                                      var user = Pleasure.MockStrictAsObject<User>(mock => mock.SetupGet(r => r.Cart).Returns(cart.Object));
+                                      cart = Pleasure.Mock<Basket>();
+                                      var user = Pleasure.MockStrictAsObject<User>(mock => mock.SetupGet(r => r.Basket).Returns(cart.Object));
                                       album = Pleasure.Generator.Invent<Album>();
 
                                       mockCommand = MockCommand<AddCartItemCommand>
-                                              .When(command)
-                                              .StubGetById(IncMusicStorePleasure.TheUserId(), user)
+                                              .When(command)                                              
                                               .StubGetById(command.AlbumId, album);
                                   };
 
@@ -42,7 +41,7 @@
 
         It should_be_add_item = () =>
                                     {
-                                        Action<ICompareFactoryDsl<CartItem, AddCartItemCommand>> setting = dsl => dsl.IgnoreBecauseRoot(r => r.Cart)
+                                        Action<ICompareFactoryDsl<Item, AddCartItemCommand>> setting = dsl => dsl.IgnoreBecauseRoot(r => r.Basket)
                                                                                                                      .ForwardToAction(r => r.Album, item => item.Album.ShouldEqualWeak(album));
                                         cart.Verify(r => r.AddItem(Pleasure.MockIt.IsWeak(mockCommand.Original, setting)));
                                     };

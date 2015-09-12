@@ -10,16 +10,6 @@
 
     public class SignInUserCommand : CommandBase
     {
-        #region Properties
-
-        public string Password { get; set; }
-
-        public string Email { get; set; }
-
-        public bool RememberMe { get; set; }
-
-        #endregion
-
         public override void Execute()
         {
             var user = Repository
@@ -29,7 +19,22 @@
             if (user == null)
                 throw IncWebException.ForServer("Please use correct email and password");
 
-            EventBroker.Publish(new SingInUserEvent(user, RememberMe));
+            Dispatcher.Push(new SignInFormCommand()
+                            {
+                                    Login = user.Email,
+                                    Id = user.Id,
+                                    Persistence = RememberMe
+                            });
         }
+
+        #region Properties
+
+        public string Password { get; set; }
+
+        public string Email { get; set; }
+
+        public bool RememberMe { get; set; }
+
+        #endregion
     }
 }

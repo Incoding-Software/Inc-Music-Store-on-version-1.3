@@ -8,18 +8,6 @@
 
     public class CartItemVm
     {
-        #region Constructors
-
-        public CartItemVm(CartItem cartItem)
-        {
-            Id = cartItem.Id.ToString();
-            Album = cartItem.Album.Title;
-            Cost = cartItem.Album.Price * cartItem.Quantity;
-            Price = cartItem.Album.Price.ToMoney();
-            Quantity = cartItem.Quantity.ToString();
-        }
-
-        #endregion
 
         #region Properties
 

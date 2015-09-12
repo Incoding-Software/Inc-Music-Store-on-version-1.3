@@ -11,56 +11,56 @@
 
 <table>
     <thead>
-        <tr>
-            <th>
-                Album Name
-            </th>
-            <th>
-                Price (each)
-            </th>
-            <th>
-                Quantity
-            </th>
-            <th></th>
-        </tr>
+    <tr>
+        <th>
+            Album Name
+        </th>
+        <th>
+            Price (each)
+        </th>
+        <th>
+            Quantity
+        </th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Items)
-        {
-            <tr>
-                <td>                
-                    @item.Album
-                </td>
-                <td>
-                    @item.Price
-                </td>
-                <td >
-                    @item.Quantity
-                </td>
-                <td>                
-                    @(Html.When(JqueryBind.Click)
-                          .DoWithPreventDefault()
-                          .AjaxPost(Url.Action("Delete", "Cart", new DeleteEntityByIdCommand(item.Id, typeof(CartItem))))
-                          .OnBegin(dsl => dsl.Self().Core().Break.If(() => !Selector.JS.Confirm("Are you sure delete album {0} from cart".F(item.Album))))
-                          .OnSuccess(dsl => dsl.With(r => r.Self().Closest(selector => selector.Tag(HtmlTag.Tr))).Core().JQuery.Manipulation.Remove())
-                          .AsHtmlAttributes(new { href = "#" })
-                          .ToLink("Remove from cart"))
-                </td>
-            </tr>
-        }
-    </tbody>
-    <tfoot>
+    @foreach (var item in Model.Items)
+    {
         <tr>
             <td>
-                Total
+                @item.Album
             </td>
             <td>
+                @item.Price
+            </td>
+            <td >
+                @item.Quantity
             </td>
             <td>
-            </td>
-            <td id="cart-total">
-                @Model.Total
+                @(Html.When(JqueryBind.Click)
+                      .PreventDefault()
+                      .AjaxPost(Url.Dispatcher().Push(new DeleteEntityByIdCommand(item.Id, typeof(Item))))
+                      .OnBegin(dsl => dsl.Self().Core().Break.If(() => !Selector.JS.Confirm("Are you sure delete album {0} from cart".F(item.Album))))
+                      .OnSuccess(dsl => dsl.With(r => r.Self().Closest(selector => selector.Tag(HtmlTag.Tr))).Core().JQuery.Manipulation.Remove())
+                      .AsHtmlAttributes(new { href = "#" })
+                      .ToLink("Remove from cart"))
             </td>
         </tr>
+    }
+    </tbody>
+    <tfoot>
+    <tr>
+        <td>
+            Total
+        </td>
+        <td>
+        </td>
+        <td>
+        </td>
+        <td id="cart-total">
+            @Model.Total
+        </td>
+    </tr>
     </tfoot>
 </table>

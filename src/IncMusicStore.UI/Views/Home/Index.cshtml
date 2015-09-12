@@ -1,10 +1,102 @@
-@using Incoding.MvcContrib
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "../Shared/_Layout.cshtml";
+    string albumTopSellingTmpl = Guid.NewGuid().ToString();
+    string genreMenuTmpl = Guid.NewGuid().ToString();
 }
-@(Html.When(JqueryBind.Click)
+
+        @using (var template = Html.Incoding().ScriptTemplate<KeyValueVm>("optionsTmpl"))
+        {
+            using (var each = template.ForEach())
+            {
+                <option value="@each.For(r => r.Value)">
+                    @each.For(r => r.Text)
+                </option>
+            }
+        }
+<div id="header">
+    <h1>
+        <a href="/">Inc MUSIC STORE</a>
+    </h1>
+    <ul id="navlist">
+        <li>
+            <a href="@Url.Action("Index", "Home")">Home</a>
+        </li>
+        <li>
+            <a href="@Url.Dispatcher().AsView("~/Views/Search/Index.cshtml")">Search</a>
+        </li>
+        <li>
+            <a href="@Url.Dispatcher().AsView("~/Views/Cart/Index.cshtml")">Cart</a>
+        </li>
+    </ul>
+</div>
+
+        
+
+
+@using (var template = Html.Incoding().ScriptTemplate<GenreVm>(genreMenuTmpl))
+{
+    <ul>
+        @using (var each = template.ForEach())
+        {
+            <li>                
+                <a href="@Url.Dispatcher().AsView("~/Views/Search/Index.cshtml").SetHash("").AppendToHashQueryString(new { GenreIds = each.For(r => r.Id) })">
+                    @each.For(r => r.Name)
+                </a>
+            </li>
+        }
+    </ul>
+}
+@(Html.When(JqueryBind.InitIncoding)
       .Do()
-      .Direct()
-      .OnSuccess(dsl => dsl.Utilities.Window.Alert("Hello Incoding framework"))
-      .AsHtmlAttributes()
-      .ToButton("Click ME"))
+      .AjaxGet(Url.Action("Fetch", "Genre"))
+      .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(genreMenuTmpl)).Html())
+      .AsHtmlAttributes(new { style = "float:left;" })
+      .ToDiv())
+
+<div id="main">      
+    <div id="promotion">
+    </div>
+    @using (var template = Html.Incoding().ScriptTemplate<GetAlbumsTopSellingQuery.Response>(albumTopSellingTmpl))
+    {
+        <h3>
+            <em>Fresh</em> off the grill
+        </h3>
+        <ul id="album-list">
+            @using (var each = template.ForEach())
+            {
+                <li>
+                    @using (Html.When(JqueryBind.Click)                                
+                                .AjaxGet(Url.Dispatcher().Query(new GetAlbumQuery(){Id = each.For(r=>r.Id)}).AsView("~/Views/Album/Details.cshtml"))
+                                .OnSuccess(dsl =>
+                                               {
+                                                   dsl.With(selector => selector.Id(IncMusicStoreSelector.DefaultDialogId)).Core().Insert.Html();
+                                                   dsl.With(selector => selector.Id(IncMusicStoreSelector.DefaultDialogId)).JqueryUI().Dialog.Open(options =>
+                                                                                                                                                       {
+                                                                                                                                                           options.Title = each.For(r => r.Title);
+                                                                                                                                                           options.Width = "auto";
+                                                                                                                                                           options.Modal = true;
+                                                                                                                                                       });
+                                               })
+                                .AsHtmlAttributes(new { href = "#" })
+                                .ToBeginTag(Html, HtmlTag.A))
+                    {
+                        <img class="img-art" alt="@each.For(r => r.Title)" src="@each.For(r => r.ArtUrl)" />
+                        <div>@each.For(r => r.Title)</div>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    @(Html
+              .When(JqueryBind.InitIncoding)              
+              .AjaxGet(Url.Dispatcher().Query(new GetAlbumsTopSellingQuery()).AsJson())
+              .OnSuccess(dsl => dsl.Self().Core().Insert.WithTemplate(Selector.Jquery.Id(albumTopSellingTmpl)).Html())
+              .AsHtmlAttributes()
+              .ToDiv())
+</div>
+   
+
+        <div id="footer">
+            built with <a href="http://incframework.com">Incoding framework</a>
+        </div>
+<div id="@IncMusicStoreSelector.DefaultDialogId"></div>

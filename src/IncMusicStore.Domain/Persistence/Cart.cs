@@ -12,11 +12,11 @@
 
     #endregion
 
-    public class Cart : IncEntityBase
+    public class Basket : EntityBase
     {
         #region Fields
 
-        readonly IList<CartItem> items = new List<CartItem>();
+        readonly IList<Item> items = new List<Item>();
 
         #endregion
 
@@ -24,18 +24,18 @@
 
         public virtual User User { get; protected set; }
 
-        public virtual ReadOnlyCollection<CartItem> Items
+        public virtual ReadOnlyCollection<Item> Items
         {
-            get { return new ReadOnlyCollection<CartItem>(this.items); }
+            get { return new ReadOnlyCollection<Item>(this.items); }
         }
 
         #endregion
 
         #region Api Methods
 
-        public virtual void AddItem(CartItem item)
+        public virtual void AddItem(Item item)
         {
-            item.Cart = this;
+            item.Basket = this;
             this.items.Add(item);
         }
 
@@ -44,7 +44,7 @@
         #region Nested classes
 
         [UsedImplicitly, Obsolete(ObsoleteMessage.ClassNotForDirectUsage, true), ExcludeFromCodeCoverage]
-        public class Map : IncMusicStoreMap<Cart>
+        public class Map : IncMusicStoreMap<Basket>
         {
             ////ncrunch: no coverage start
             #region Constructors

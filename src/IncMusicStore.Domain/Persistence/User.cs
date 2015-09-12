@@ -12,7 +12,7 @@
 
     #endregion
 
-    public class User : IncEntityBase
+    public class User : EntityBase
     {
         #region Fields
 
@@ -30,7 +30,7 @@
             Email = email;
             Password = password;
             Name = fullName;
-            Cart = new Cart();
+            Basket = new Basket();
         }
 
         #endregion
@@ -43,7 +43,7 @@
 
         public virtual string Password { get; protected set; }
 
-        public virtual Cart Cart { get; protected set; }
+        public virtual Basket Basket { get; protected set; }
 
         public virtual ReadOnlyCollection<Order> Orders
         {
@@ -62,7 +62,7 @@
 
         public virtual void NewCart()
         {
-            Cart = new Cart();
+            Basket = new Basket();
         }
 
         #endregion
@@ -85,7 +85,7 @@
                                                part.Map(r => r.Middle);
                                            });
                 Map(r => r.Password);
-                References(r => r.Cart).Cascade.All();
+                References(r => r.Basket).Cascade.All();
                 HasMany(r => r.Orders).Access.CamelCaseField().Cascade.AllDeleteOrphan();
             }
 

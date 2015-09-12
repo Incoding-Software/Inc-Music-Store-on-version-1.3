@@ -18,16 +18,15 @@
         #endregion
 
         Establish establish = () =>
-                                  {
-                                      var command = Pleasure.Generator.Invent<SignInUserCommand>();
-                                      var expected = Pleasure.Generator.Invent<User>();
+                              {
+                                  var command = Pleasure.Generator.Invent<SignInUserCommand>();
+                                  var expected = Pleasure.Generator.Invent<User>();
 
-                                      mockCommand = MockCommand<SignInUserCommand>
-                                              .When(command)
-                                              .StubQuery(whereSpecification: new UserByCredentialWhereSpec(command.Email, command.Password), 
-                                                         entities: expected)
-                                              .StubPublish<SingInUserEvent>(@event => @event.ShouldEqualWeak(expected, dsl => dsl.ForwardToValue(r => r.RememberMe, command.RememberMe)));
-                                  };
+                                  mockCommand = MockCommand<SignInUserCommand>
+                                          .When(command)
+                                          .StubQuery(whereSpecification: new UserByCredentialWhereSpec(command.Email, command.Password),
+                                                     entities: expected);
+                              };
 
         Because of = () => mockCommand.Original.Execute();
 

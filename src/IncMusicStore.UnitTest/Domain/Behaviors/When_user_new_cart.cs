@@ -15,23 +15,23 @@
 
         static User original;
 
-        static Cart oldCart;
+        static Basket oldBasket;
 
         #endregion
 
         Establish establish = () =>
                                   {
-                                      oldCart = Pleasure.Generator.Invent<Cart>(dsl => dsl.Callback(cart => cart.AddItem(Pleasure.Generator.Invent<CartItem>())));
-                                      original = Pleasure.Generator.Invent<User>(dsl => dsl.Tuning(r => r.Cart, oldCart));
+                                      oldBasket = Pleasure.Generator.Invent<Basket>(dsl => dsl.Callback(cart => cart.AddItem(Pleasure.Generator.Invent<Item>())));
+                                      original = Pleasure.Generator.Invent<User>(dsl => dsl.Tuning(r => r.Basket, oldBasket));
                                   };
 
         Because of = () => original.NewCart();
 
-        It should_not_be_old_cart = () => original.Cart.IsEqualWeak(oldCart).ShouldBeFalse();
+        It should_not_be_old_cart = () => original.Basket.IsEqualWeak(oldBasket).ShouldBeFalse();
 
-        It should_be_new_cart = () => original.Cart.ShouldEqualWeak(new
+        It should_be_new_cart = () => original.Basket.ShouldEqualWeak(new
                                                                         {
-                                                                                Items = Pleasure.ToReadOnly<CartItem>(), 
+                                                                                Items = Pleasure.ToReadOnly<Item>(), 
                                                                         }, dsl => dsl.IgnoreBecauseNotUse(r => r.User));
     }
 }

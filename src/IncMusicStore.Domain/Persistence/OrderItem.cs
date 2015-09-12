@@ -17,11 +17,11 @@
         [UsedImplicitly, Obsolete(ObsoleteMessage.SerializeConstructor, true), ExcludeFromCodeCoverage]
         public OrderItem() { }
 
-        public OrderItem(CartItem cartItem)
+        public OrderItem(Item item)
         {
-            Quantity = cartItem.Quantity;
-            Album = cartItem.Album;
-            UnitPrice = cartItem.Album.Price;
+            Quantity = item.Quantity;
+            Album = item.Album;
+            UnitPrice = item.Album.Price;
         }
 
         #endregion

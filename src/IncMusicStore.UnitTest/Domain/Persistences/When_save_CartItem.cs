@@ -9,13 +9,13 @@
 
     #endregion
 
-    [Subject(typeof(CartItem))]
-    public class When_save_CartItem : SpecWithPersistenceSpecification<CartItem>
+    [Subject(typeof(Item))]
+    public class When_save_CartItem : SpecWithPersistenceSpecification<Item>
     {
         Because of = () => persistenceSpecification
                                    .CheckProperty(r => r.Quantity, Pleasure.Generator.PositiveNumber())
                                    .CheckProperty(r => r.Album, Pleasure.Generator.InventEntity<Album>())
-                                   .CheckProperty(r => r.Cart, Pleasure.Generator.InventEntity<Cart>());
+                                   .CheckProperty(r => r.Basket, Pleasure.Generator.InventEntity<Basket>());
 
         It should_be_verify = () => persistenceSpecification.VerifyMappingAndSchema();
     }
